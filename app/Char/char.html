@@ -1,0 +1,14 @@
+<div class="container">
+  charname
+  <input type="text" [(ngModel)]="charName" class="char-search"> realmname
+  <input type="text" [(ngModel)]="realmName" class="realm-search">
+  <button (click)="getChar()">Suche</button>
+</div>
+
+{{char.className}}
+<div class="details">
+  <ul>
+    <li *ngFor="#class of classes">{{class.name}} id: {{class.id}}</li>
+  </ul>
+</div>
+{{char.name}}
