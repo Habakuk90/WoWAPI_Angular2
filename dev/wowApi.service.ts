@@ -9,17 +9,15 @@ export class ApiComp {
   constructor(public _http: Http, private jsonp: Jsonp) {
 
   }
-
-
-
-
   public fields: string = '?fields=';
   //[TODO] for all languages
   public local: string = '&locale=de_DE';
-  public achievement: string = 'achievement/:id?';
+  public achievement: string = 'achievements';
   public auctionData: string = 'auction/data/:Realm/';
 
   public charProfile = { value: 'character/', name: 'charProfile' };
+
+  // [TODO] nicht immer alles laden
   public profileFields = [
     'achievements',
     'apperance',
@@ -30,7 +28,7 @@ export class ApiComp {
     'talents',
     'guild',
   ]
-
+  // wow/data/character/ achievements
   public guildProfile = { value: 'guild/:realm/:guildname', name: 'guildProfile' };
   public guildFields = [
     'members',
@@ -66,14 +64,15 @@ export class ApiComp {
   generateProfileLink(char: string, fields: string) {
     return this.link + this.charProfile.value + char + this.fields + 'pvp+guild+achievements+items' +this.local + this.apiKey;
   }
-  generateAchievementLink() {
-    this.fullLink = this.link + this.achievement + this.local + this.apiKey;
-  }
 
   generateGuildLink(val) {
     this.fullLink = this.link + this.guildProfile.value + this.fields + val + this.local + this.apiKey;
-
   }
+
+  generateAchievementLink() {
+    return this.fullLink = this.link + this.dataResource + this.dataResourceFields[3] + '?' + this.local + this.apiKey;
+  }
+
   generateItemLink(id:number) {
     return this.fullLink = this.link + this.itemApi + id + '?' + this.local + this.apiKey;
   }
@@ -94,6 +93,9 @@ export class ApiComp {
     this.fullLink = this.link + this.dataResource + val + '?' + this.local + this.apiKey;
   }
 
+  getAchievementList() {
+    return this._http.get(this.generateAchievementLink()).map(res => res.json());
+  }
 
   getChar(name:string, realm:string, fields:string = '') {
     return this._http.get(this.generateProfileLink(name + '/' + realm, fields)).map(res => res.json());

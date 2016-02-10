@@ -21,6 +21,7 @@ export class CharComp {
   public classes;
 
   public char = [];
+  public achiv = [];
   // getCharClass() {
   //   var char = this.char;
   //   var classes = [];
@@ -39,18 +40,40 @@ export class CharComp {
       .subscribe(
         data => this.char = data,
         error => console.log(error),
-        () => this.getItem('mainHand')
+        () => this.getAchievementList()
       )
   }
 
-  getItem(item) {
-    var charItems = this.char.items;
-    console.log(charItems);
-    this.api.getItem(charItems.item.id).subscribe(
-        data=> console.log(data)
-    )
-
+  getAchievementList() {
+    console.log(this.char);
+    this.api.getAchievementList().subscribe(
+        data => this.achiv = data,
+        err => console.log(err),
+        () => this.getAchiev()
+      )
   }
+
+  getAchiev() {
+    var completed_achievement;
+    var len = this.achiv.achievements.length;
+    console.log(this.achiv.achievements.length)
+    for (var i = 0; i < len; i++) {
+      if (this.achiv.achievements[0].achievements[0].id === 6) {
+          completed_achievement = this.achiv.achievements[0].achievements[0];
+      }
+    }
+    console.log(completed_achievement);
+   }
+
+
+  // getItem(item) {
+  //   var charItems = this.char.items;
+  //   console.log(this.char);
+  //   this.api.getItem(charItems.item.id).subscribe(
+  //       data=> console.log(data)
+  //   )
+
+  // }
   // getCharGuild() {
   //   this.api.
   // }
