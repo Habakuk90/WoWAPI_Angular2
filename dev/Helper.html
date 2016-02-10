@@ -1,0 +1,33 @@
+<div>
+  <ul style="list-style:none">
+    <li> {{charProfile.name}}
+      <ul>
+        <li class="charFields" *ngFor="#fields of profileFields" (click)="generateProfileLink(fields)">{{fields}}</li>
+      </ul>
+    </li>
+    <li (click)="generateAchievementLink()">AchievemtId: {{achievement}}</li>
+    <li>{{guildProfile.name}}
+      <ul>
+        <li (click)="generateGuildLink(fields)" *ngFor="#fields of guildFields">{{fields}}</li>
+      </ul>
+    </li>
+    <li (click)="generateItemLink()">ItemId: {{itemApi}}</li>
+    <li>ItemSet: {{itemSet}}</li>
+    <li>pvp Leaderboard: {{pvpApi.name}}
+      <ul>
+        <li (click)="generateLeaderboardLink(fields)" *ngFor="#fields of brackets">{{fields}}</li>
+      </ul>
+    </li>
+    <li (click)="generateFullRealmListLink()">Realm: {{realmStatus}}
+    </li>
+    <li (click)="generateSpellListLink()">SpellId: {{spellApi}}</li>
+    <li>Data Resource:
+      <ul>
+        <li *ngFor="#fields of dataResourceFields" (click)="generateDataResourceLink(fields)">{{fields}}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<div class="text-to-copy"><input type="text" style="width:100%" value="{{fullLink}}"></div>

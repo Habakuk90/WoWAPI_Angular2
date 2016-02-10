@@ -1,25 +1,24 @@
 import {Component, Injectable} from 'angular2/core';
-import { Http, Headers, HTTP_PROVIDERS, BaseRequestOptions, RequestOptions, URLSearchParams, Jsonp } from 'angular2/http';
-// import {HelperComp} from './helper.comp';
-
-@Injectable()
-export class ApiComp {
-  apiKey: string = '&apikey=7nzfdaekfbk2x3ygya9bpvs64k248sxc';
-  link: string = 'https://eu.api.battle.net/wow/';
-  constructor(public _http: Http, private jsonp: Jsonp) {
-
-  }
 
 
 
+@Component({
+    selector: 'helper',
+    templateUrl: 'dev/Helper.html',
+    directives: [],
+    providers: []
+})
 
+export class HelperComp {
+  public link: string = 'https://eu.api.battle.net/wow/';
   public fields: string = '?fields=';
   //[TODO] for all languages
   public local: string = '&locale=de_DE';
+  public apiKey: string = '&apikey=7nzfdaekfbk2x3ygya9bpvs64k248sxc';
   public achievement: string = 'achievement/:id?';
   public auctionData: string = 'auction/data/:Realm/';
 
-  public charProfile = { value: 'character/', name: 'charProfile' };
+  public charProfile = { value: 'character/:realm/:character', name: 'charProfile' };
   public profileFields = [
     'achievements',
     'apperance',
@@ -28,7 +27,6 @@ export class ApiComp {
     'pvp',
     'statistics',
     'talents',
-    'guild',
   ]
 
   public guildProfile = { value: 'guild/:realm/:guildname', name: 'guildProfile' };
@@ -38,7 +36,7 @@ export class ApiComp {
     'news',
   ]
 
-  public itemApi: string = 'item/';
+  public itemApi: string = 'item/:itemid?';
   public itemSet = 'item/set/:setid';
 
   public pvpApi = { value: 'leaderboard/', name: 'pvp Leaderboard' };
@@ -61,10 +59,10 @@ export class ApiComp {
     'talents',
   ]
 
-
   public fullLink: string = '';
-  generateProfileLink(char: string, fields: string) {
-    return this.link + this.charProfile.value + char + this.fields + 'pvp+guild+achievements+items' +this.local + this.apiKey;
+  generateProfileLink(val) {
+    this.fullLink = this.link + this.charProfile.value + this.fields + val + this.local + this.apiKey;
+
   }
   generateAchievementLink() {
     this.fullLink = this.link + this.achievement + this.local + this.apiKey;
@@ -74,8 +72,8 @@ export class ApiComp {
     this.fullLink = this.link + this.guildProfile.value + this.fields + val + this.local + this.apiKey;
 
   }
-  generateItemLink(id:number) {
-    return this.fullLink = this.link + this.itemApi + id + '?' + this.local + this.apiKey;
+  generateItemLink(){
+    this.fullLink = this.link + this.itemApi + this.local + this.apiKey;
   }
 
   generateLeaderboardLink(val) {
@@ -94,12 +92,5 @@ export class ApiComp {
     this.fullLink = this.link + this.dataResource + val + '?' + this.local + this.apiKey;
   }
 
-
-  getChar(name:string, realm:string, fields:string = '') {
-    return this._http.get(this.generateProfileLink(name + '/' + realm, fields)).map(res => res.json());
-  }
-  getItem(id:number) {
-    return this._http.get(this.generateItemLink(id)).map(res=> res.json());
-  }
-
+  //wow.zamimg.com/images/wow/icons/large/inv_60pvp_ring2a.jpg
 }

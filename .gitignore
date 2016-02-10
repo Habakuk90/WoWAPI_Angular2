@@ -1,4 +1,8 @@
 /node_modules
 /src
+/app/*.js
 Helper.txt
 # Created by .ignore support plugin (hsz.mobi)
+app/Char/char.comp.js
+app/Char/char.js
+npm-debug.log

@@ -1,15 +1,6 @@
 import {Component} from 'angular2/core';
-import {ApiComp} from '../wowApi.service'
-interface IChar {
-  battlegroup: string,
-  class: number,
-  level: number,
-  faction: number,
-  name: string,
-  realm: string,
-  thumbnail: string,
-  className: string
-}
+import {ApiComp} from '../wowApi.service';
+import {IChar} from './char';
 
 @Component({
     selector: 'char',
@@ -23,49 +14,48 @@ interface IChar {
 
 export class CharComp {
   constructor(public api: ApiComp) {
-    this.getClasses();
+
   }
   public charName: string = 'Kiluk';
   public realmName: string = 'Mannoroth';
   public classes;
-  public char: IChar = {
 
-  };
+  public char = [];
+  // getCharClass() {
+  //   var char = this.char;
+  //   var classes = [];
 
+  //   for (var i = 0; i < 11; ++i) {
+  //   classes.push(this.classes[i]);
+  //     console.log(char)
+  //     if (classes[i].id === char.class)
+  //       this.char.className = classes[i].name;
+  //   }
 
+  // }
 
-  getCharClass() {
-    var char = this.char;
-    var classes = [];
-
-    for (var i = 0; i < 11; ++i) {
-    classes.push(this.classes[i]);
-      console.log(char)
-      if (classes[i].id === char.class)
-        this.char.className = classes[i].name;
-    }
-
-  }
-
-
-  getClasses() {
-    this.api.getClasses().subscribe(
-      data => this.classes = (data.classes),
-      err => console.log(err)
-    )
-  }
   getChar() {
-    this.api.getChar(this.realmName, this.charName)
+    this.api.getChar(this.realmName, this.charName, 'guild')
       .subscribe(
         data => this.char = data,
         error => console.log(error),
-        () => this.getCharClass()
+        () => this.getItem('mainHand')
       )
   }
 
-  setValues() {
+  getItem(item) {
+    var charItems = this.char.items;
+    console.log(charItems);
+    this.api.getItem(charItems.item.id).subscribe(
+        data=> console.log(data)
+    )
 
   }
+  // getCharGuild() {
+  //   this.api.
+  // }
+
+
 
   // http:// eu.battle.net/static-render/nefarian/ + <the string you got from API as thumbnail>
 }
