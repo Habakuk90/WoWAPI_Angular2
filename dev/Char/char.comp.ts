@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, Inject, forwardRef} from 'angular2/core';
 import {ApiComp} from '../wowApi.service';
 import {IChar} from './char';
 
@@ -14,7 +14,7 @@ import {IChar} from './char';
 
 export class CharComp {
   constructor(public api: ApiComp) {
-
+    this.getAchievementList()
   }
   public charName: string = 'Kiluk';
   public realmName: string = 'Mannoroth';
@@ -39,31 +39,39 @@ export class CharComp {
     this.api.getChar(this.realmName, this.charName, 'guild')
       .subscribe(
         data => this.char = data,
-        error => console.log(error),
-        () => this.getAchievementList()
+        error => console.log(error)
       )
+  console.log(this.achiv);
   }
-
   getAchievementList() {
-    console.log(this.char);
+    console.log();
+    var achiveList = [];
     this.api.getAchievementList().subscribe(
-        data => this.achiv = data,
-        err => console.log(err),
-        () => this.getAchiev()
-      )
+      data => this.achiv = data,
+      err => console.log(err),
+      () => this.getAchiev()
+    )
+
+
+
   }
 
   getAchiev() {
+    this.api.getAchievementList().filter(x => console.log(x) )
+//mit achievement id array
     var completed_achievement;
     var len = this.achiv.achievements.length;
-    console.log(this.achiv.achievements.length)
+    var len2 = this.achiv.achievements[0].achievements.length;
     for (var i = 0; i < len; i++) {
-      if (this.achiv.achievements[0].achievements[0].id === 6) {
-          completed_achievement = this.achiv.achievements[0].achievements[0];
+      for (var j = 0; j < len2; ++j) {
+      console.log(i, j);
+        // console.log(this.achiv.achievements[i].achievements[j]);
+    if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
+        console.log(this.achiv.achievements[i].achievements[j], "true");
       }
     }
     console.log(completed_achievement);
-   }
+  }
 
 
   // getItem(item) {
