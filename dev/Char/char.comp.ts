@@ -14,7 +14,6 @@ import {IChar} from './char';
 
 export class CharComp {
   constructor(public api: ApiComp) {
-    this.getAchievementList()
   }
   public charName: string = 'Kiluk';
   public realmName: string = 'Mannoroth';
@@ -39,9 +38,10 @@ export class CharComp {
     this.api.getChar(this.realmName, this.charName, 'guild')
       .subscribe(
         data => this.char = data,
-        error => console.log(error)
+        error => console.log(error),
+        () => this.getAchievementList()
       )
-  console.log(this.achiv);
+
   }
   getAchievementList() {
     console.log();
@@ -51,26 +51,24 @@ export class CharComp {
       err => console.log(err),
       () => this.getAchiev()
     )
-
-
-
   }
 
+
+
   getAchiev() {
-    this.api.getAchievementList().filter(x => console.log(x) )
-//mit achievement id array
+
+    //mit achievement id array
     var completed_achievement;
+    console.log(this.char.achievements.achievementsCompleted);
     var len = this.achiv.achievements.length;
     var len2 = this.achiv.achievements[0].achievements.length;
     for (var i = 0; i < len; i++) {
       for (var j = 0; j < len2; ++j) {
-      console.log(i, j);
-        // console.log(this.achiv.achievements[i].achievements[j]);
-    if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
-        console.log(this.achiv.achievements[i].achievements[j], "true");
+        if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
+          console.log(this.achiv.achievements[i].achievements[j], "true");
+          break;
       }
     }
-    console.log(completed_achievement);
   }
 
 
