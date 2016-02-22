@@ -4,3 +4,7 @@
   <input type="text" [(ngModel)]="realmName" class="realm-search">
   <button (click)="getChar()">Suche</button>
 </div>
+
+<ul>
+  <li *ngFor="#char of charPvPAchiev">{{char.title}}</li>
+</ul>

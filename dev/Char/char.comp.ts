@@ -14,6 +14,7 @@ import {IChar} from './char';
 
 export class CharComp {
   constructor(public api: ApiComp) {
+    this.getAchievementList();
   }
   public charName: string = 'Kiluk';
   public realmName: string = 'Mannoroth';
@@ -37,9 +38,9 @@ export class CharComp {
   getChar() {
     this.api.getChar(this.realmName, this.charName, 'guild')
       .subscribe(
-        data => this.char = data,
-        error => console.log(error),
-        () => this.getAchievementList()
+      data => this.char = data,
+      error => console.log(error),
+      () => this.getCharPvPAchiev()
       )
 
   }
@@ -48,24 +49,62 @@ export class CharComp {
     var achiveList = [];
     this.api.getAchievementList().subscribe(
       data => this.achiv = data,
-      err => console.log(err),
-      () => this.getAchiev()
+      err => console.log(err)
     )
   }
 
+  setTimeStamp(timestamp) {
+    var time = timestamp,
+      date = new Date(timestamp * 1000),
+      datevalues = [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+      ];
+  return datevalues;
+  }
 
+  public charPvPAchiev = [];
+  getCharPvPAchiev() {
+    var charAchiev = this.char.achievements.achievementsCompleted;
+    var charAchievTimestamp = this.char.achievements.achievementsCompletedTimestamp;
+    console.log(charAchiev)
+    var pvpAchievArena = this.achiv.achievements[3].categories[15].achievements;
+    console.log(charAchievTimestamp);
+    var pvpAchievRBG = this.achiv.achievements[3].categories[14].achievements;
+    for (var i = 0; i < charAchiev.length; ++i) {
+      for (var j = 0; j < pvpAchievArena.length; ++j) {
+        if (charAchiev[i] === pvpAchievArena[j].id) {
+          pvpAchievArena[j].timestamp = this.setTimeStamp(charAchievTimestamp[charAchiev[i]] / 1000);
+          this.charPvPAchiev.push(pvpAchievArena[j]);
+          break;
+        }
+      }
+    }
+    for (var i = 0; i < charAchiev.length; ++i) {
+      for (var j = 0; j < pvpAchievRBG.length; ++j) {
+        if (charAchiev[i] === pvpAchievRBG[j].id) {
+          this.charPvPAchiev.push(pvpAchievRBG[j]);
+          break;
+        }
+      }
+    }
+
+    // for (var i = 0; i < this.charPvPAchiev.length; ++i) {
+    //   this.charPvPAchiev[i].timestamp = this.setTimeStamp(charAchievTimestamp[this.charPvPAchiev[i].id] / 1000);
+    // }
+    console.log(this.charPvPAchiev);
+  }
 
   getAchiev() {
 
     //mit achievement id array
     var completed_achievement;
-    console.log(this.char.achievements.achievementsCompleted);
     var len = this.achiv.achievements.length;
     var len2 = this.achiv.achievements[0].achievements.length;
     for (var i = 0; i < len; i++) {
       for (var j = 0; j < len2; ++j) {
         if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
-          console.log(this.achiv.achievements[i].achievements[j], "true");
           break;
       }
     }
