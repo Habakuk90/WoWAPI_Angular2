@@ -1,10 +1,39 @@
-<div class="container">
-  charname
-  <input type="text" [(ngModel)]="charName" class="char-search"> realmname
-  <input type="text" [(ngModel)]="realmName" class="realm-search">
-  <button (click)="getChar()">Suche</button>
+<div class="container-fluid char-wrapper">
+  <div class="container-fluid">
+    <div class="search-value">
+      <div class="textbox-wrapper col-lg-4">
+        <p><b>Charname:</b></p>
+        <input type="text" [(ngModel)]="charName" class="char-search">
+      </div>
+      <div class="textbox-wrapper col-lg-4">
+        <p><b>Realmname:</b></p>
+        <input type="text" [(ngModel)]="realmName" class="realm-search">
+      </div>
+      <div class="textbox-wrapper col-lg-4">
+        <button id="search" (click)="getChar()">Search</button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="search-wrapper">
+      <ul class="search-for">
+        <li class="col-lg-4">
+          <label (click)="filter($event)">Guild</label>
+        </li>
+        <li class="col-lg-4">
+          <label (click)="filter($event)">PvP Achievements</label>
+        </li>
+        <li class="col-lg-4">
+          <label (click)="filter($event)">All Achiev</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid content-background">
+    <div class="container content-achiev">
+    </div>
+    <ul>
+      <li *ngFor="#char of charPvPAchiev">{{char.title}}</li>
+    </ul>
+  </div>
 </div>
-
-<ul>
-  <li *ngFor="#char of charPvPAchiev">{{char.title}}</li>
-</ul>

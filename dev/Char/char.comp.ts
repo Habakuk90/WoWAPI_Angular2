@@ -1,6 +1,5 @@
 import {Component, Inject, forwardRef} from 'angular2/core';
 import {ApiComp} from '../wowApi.service';
-import {IChar} from './char';
 
 @Component({
     selector: 'char',
@@ -19,7 +18,8 @@ export class CharComp {
   public charName: string = 'Kiluk';
   public realmName: string = 'Mannoroth';
   public classes;
-
+  public hidden;
+  public visible = true;
   public char = [];
   public achiv = [];
   // getCharClass() {
@@ -109,8 +109,15 @@ export class CharComp {
       }
     }
   }
-
-
+  filter(e) {
+    console.log(e.target.style.background);
+    if (e.target.style.background === 'rgb(22, 29, 117)' || !e.target.style.background) {
+      e.target.style.background = '#696FF1';
+    }
+    else{
+      e.target.style.background = '#161D75';
+    }
+  }
   // getItem(item) {
   //   var charItems = this.char.items;
   //   console.log(this.char);

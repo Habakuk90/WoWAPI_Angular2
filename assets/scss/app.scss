@@ -1,12 +1,14 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 16px;
+  font-family: "Droid Sans" !important;
+  font-size: 16px !important;
 }
 
 nav {
-  list-style-type: none;
+  ul {
+    list-style-type: none;
+  }
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -20,10 +22,110 @@ nav {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    color:white;
+    list-style-type: none;
+    color: white;
   }
   a:hover {
     background-color: black;
     color: white;
+  }
+}
+
+.char-wrapper {
+  padding: 0;
+  margin: 0;
+  padding: 0px !important;
+}
+
+.search-wrapper {
+  margin-right: auto;
+  margin-left: auto;
+  .search-for {
+    list-style-type: none;
+    li {
+      display: inline-block;
+      label {
+        text-align: center;
+        display: block;
+        width: 200px;
+        margin: 0 auto;
+        background-color: #161D75;
+        padding: 5px 30px;
+        border-radius: 16px;
+        font-size: 13px;
+        color: white;
+      }
+      label:hover {
+        background-color: #696FF1;
+      }
+    }
+  }
+}
+
+.search-value {
+  width: 50%;
+  margin: 0 auto;
+  height: 50px;
+  .textbox-wrapper {
+    display: inline-block;
+    padding: 0px 5px 5px 5px;
+    border-radius: 20px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    p {
+      padding: 0;
+      padding-left: 8px;
+      margin: 0;
+      font-size: 11px;
+      font-style: italic;
+    }
+    #search {
+      margin: auto 0;
+      vertical-align: bottom;
+      position: relative;
+      top: 20%;
+      border-style: none;
+    }
+    input {
+      color: white;
+      background-color: #050C34;
+      border-style: hidden;
+      border-radius: 20px;
+      padding-left: 13px;
+      font-size: 15px;
+    }
+    input:focus {
+      background-color: #1E32F7;
+      border-style: hidden;
+      border-radius: 20px;
+      outline: none;
+    }
+  }
+}
+
+.content-background {
+  background: url(../../assets/Untitled.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:85%;
+  ul {
+    padding: 0px !important;
+  }
+
+  .content-achiev {
+    background-color:rgba(22,28,117,1);
+    height:75%;
+    width: 65%;
+    z-index:9999;
+    position: relative;
+    top:10%;
+    border: solid white 1px;
+    border-radius: 20px;
+    -webkit-box-shadow: inset 12px 14px 19px -9px rgba(0,0,0,1);
+-moz-box-shadow: inset 12px 14px 19px -9px rgba(0,0,0,1);
+box-shadow: inset 12px 14px 19px -9px rgba(0,0,0,1);
   }
 }
