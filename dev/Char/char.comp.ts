@@ -20,8 +20,8 @@ export class CharComp {
   public classes;
   public hidden;
   public visible = true;
-  public char = [];
-  public achiv = [];
+  public char: Char;
+  public achiv: AchievmentsData;
   // getCharClass() {
   //   var char = this.char;
   //   var classes = [];
@@ -130,7 +130,24 @@ export class CharComp {
   //   this.api.
   // }
 
-
-
   // http:// eu.battle.net/static-render/nefarian/ + <the string you got from API as thumbnail>
+}
+
+interface Char {
+  achievements:CharAchievements;
+
+}
+
+interface CharAchievements {
+  achievementsCompleted: number[],
+  achievementsCompletedTimestamp: number[],
+
+}
+
+interface AchievmentsData {
+  achievements: achievments[],
+
+}
+interface achievments {
+  achievements: number[]
 }
