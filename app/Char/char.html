@@ -32,17 +32,17 @@
   <div class="container-fluid content-background">
     <div class="container char-title" style="width:70%">
       <div class="col-lg-3 avatar">
-        <img [src]="char.thumbnail" alt="">
+        <img [src]="char?.thumbnail" alt="">
       </div>
       <div class="col-lg-9">
-        <label class="" style="color:#E6E42F">{{char.name}}</label>
+        <label class="" style="color:#E6E42F">{{char?.name}}</label>
         <label style="color:#E6E42F">
-          <{{char.guild.name}}>
+          <{{char?.guild?.name}}>
         </label>
       </div>
     </div>
     <div class="container content-achiev">
-      <achiev-data [charData]="char.achievements" [achieveData]="charPvPAchiev"></achiev-data>
+      <achiev-data [charData]="char?.achievements" [achieveData]="charPvPAchiev"></achiev-data>
     </div>
   </div>
 </div>

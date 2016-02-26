@@ -2,7 +2,6 @@ import {Component,Input, Injectable,Inject, forwardRef} from 'angular2/core';
 import {ApiComp} from '../wowApi.service';
 import {CharComp} from './char.comp';
 import {IChar} from './char';
-import {CharService} from './char.service';
 
 
 @Injectable()
@@ -11,7 +10,7 @@ import {CharService} from './char.service';
     selector: 'achiev-data',
     templateUrl: 'app/Char/achiev.html',
     directives: [],
-    providers: [ApiComp, CharService],
+    providers: [ApiComp],
     inputs: ['charData', 'achieveData'],
     styleUrls: ['']
 })
@@ -19,7 +18,7 @@ import {CharService} from './char.service';
 
 
 export class AchievementsComp  {
-  constructor(public api: ApiComp, public charService: CharService) {
+  constructor(public api: ApiComp) {
   }
   public title: string;
   public description: string;

@@ -1,7 +1,6 @@
 import {Component, Inject, Injectable, forwardRef} from 'angular2/core';
 import {ApiComp} from '../wowApi.service';
 import {AchievementsComp} from './achievements.comp';
-import {CharService} from './char.service';
 import {IChar} from './char';
 
 @Injectable()
@@ -10,7 +9,7 @@ import {IChar} from './char';
     selector: 'char',
     templateUrl: 'app/Char/char.html',
     directives: [AchievementsComp],
-    providers: [ApiComp, CharService, AchievementsComp],
+    providers: [ApiComp, AchievementsComp],
 })
 
 
@@ -21,10 +20,10 @@ export class CharComp {
   public classes;
   public hidden;
   public visible = true;
-  public char: IChar = this.charService.charData;
+  public char: IChar;
   public achiv: AchievmentsData;
 
-  constructor(public api: ApiComp, public charService: CharService, public achiev:AchievementsComp) {
+  constructor(public api: ApiComp, public achiev:AchievementsComp) {
     this.getAchievementList();
     // this.char.thumbnail = '';
   }
@@ -79,7 +78,7 @@ export class CharComp {
 
   public charPvPAchiev;
   getCharPvPAchiev() {
-    this.charPvPAchiev = [];
+      this.charPvPAchiev = [];
       var charAchiev = this.char.achievements.achievementsCompleted;
       var charAchievTimestamp = this.char.achievements.achievementsCompletedTimestamp;
       this.char.thumbnail = "http://eu.battle.net/static-render/eu/" + this.char.thumbnail;
@@ -87,26 +86,26 @@ export class CharComp {
       var pvpAchievArena = this.achiv.achievements[3].categories[15].achievements;
       var pvpAchievRBG = this.achiv.achievements[3].categories[14].achievements;
       for (var i = 0; i < charAchiev.length; ++i) {
-      for (var j = 0; j < pvpAchievArena.length; ++j) {
-        if (charAchiev[i] === pvpAchievArena[j].id) {
-          pvpAchievArena[j].timestamp = this.setTimeStamp(charAchievTimestamp[charAchiev[i]] / 1000);
-          this.charPvPAchiev.push(pvpAchievArena[j]);
-          break;
+        for (var j = 0; j < pvpAchievArena.length; ++j) {
+          if (charAchiev[i] === pvpAchievArena[j].id) {
+            pvpAchievArena[j].timestamp = this.setTimeStamp(charAchievTimestamp[charAchiev[i]] / 1000);
+            this.charPvPAchiev.push(pvpAchievArena[j]);
+            break;
+          }
         }
-      }
       }
       for (var i = 0; i < charAchiev.length; ++i) {
-      for (var j = 0; j < pvpAchievRBG.length; ++j) {
-        if (charAchiev[i] === pvpAchievRBG[j].id) {
-          this.charPvPAchiev.push(pvpAchievRBG[j]);
-          break;
+        for (var j = 0; j < pvpAchievRBG.length; ++j) {
+          if (charAchiev[i] === pvpAchievRBG[j].id) {
+            this.charPvPAchiev.push(pvpAchievRBG[j]);
+            break;
+          }
         }
       }
-      }
 
-      // for (var i = 0; i < this.charPvPAchiev.length; ++i) {
-      //   this.charPvPAchiev[i].timestamp = this.setTimeStamp(charAchievTimestamp[this.charPvPAchiev[i].id] / 1000);
-      // }
+      for (var i = 0; i < this.charPvPAchiev.length; ++i) {
+        this.charPvPAchiev[i].timestamp = this.setTimeStamp(charAchievTimestamp[this.charPvPAchiev[i].id] / 1000);
+      }
   }
 
   getAchiev() {
@@ -116,10 +115,10 @@ export class CharComp {
       var len = this.achiv.achievements.length;
       var len2 = this.achiv.achievements[0].achievements.length;
       for (var i = 0; i < len; i++) {
-      for (var j = 0; j < len2; ++j) {
-        if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
-          break;
-      }
+        for (var j = 0; j < len2; ++j) {
+          if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
+            break;
+        }
       }
   }
 
