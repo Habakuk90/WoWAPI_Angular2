@@ -1,15 +1,15 @@
 <div class="container-fluid char-wrapper">
   <div class="container-fluid">
     <div class="search-value">
-      <div class="textbox-wrapper col-lg-4">
+      <div class="textbox-wrapper col-lg-5">
         <p><b>Charname:</b></p>
         <input type="text" [(ngModel)]="charName" class="char-search">
       </div>
-      <div class="textbox-wrapper col-lg-4">
+      <div class="textbox-wrapper col-lg-5">
         <p><b>Realmname:</b></p>
         <input type="text" [(ngModel)]="realmName" class="realm-search">
       </div>
-      <div class="textbox-wrapper col-lg-4">
+      <div class="textbox-wrapper col-lg-2">
         <button id="search" (click)="getChar()">Search</button>
       </div>
     </div>
@@ -30,10 +30,19 @@
     </div>
   </div>
   <div class="container-fluid content-background">
-    <div class="container content-achiev">
+    <div class="container char-title" style="width:70%">
+      <div class="col-lg-3 avatar">
+        <img [src]="char.thumbnail" alt="">
+      </div>
+      <div class="col-lg-9">
+        <label class="" style="color:#E6E42F">{{char.name}}</label>
+        <label style="color:#E6E42F">
+          <{{char.guild.name}}>
+        </label>
+      </div>
     </div>
-    <ul>
-      <li *ngFor="#char of charPvPAchiev">{{char.title}}</li>
-    </ul>
+    <div class="container content-achiev">
+      <achiev-data [charData]="char.achievements" [achieveData]="charPvPAchiev"></achiev-data>
+    </div>
   </div>
 </div>

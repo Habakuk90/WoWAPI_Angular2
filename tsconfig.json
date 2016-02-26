@@ -21,5 +21,15 @@
   ],
   "atom": {
     "rewriteTsconfig": true
-  }
+  },
+  "files": [
+    "./dev/app.component.ts",
+    "./dev/boot.ts",
+    "./dev/Char/achievements.comp.ts",
+    "./dev/Char/char.comp.ts",
+    "./dev/Char/char.ts",
+    "./dev/helper.comp.ts",
+    "./dev/Home/home.comp.ts",
+    "./dev/wowApi.service.ts"
+  ]
 }
