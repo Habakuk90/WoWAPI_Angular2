@@ -11,7 +11,7 @@ import {IChar} from './char';
     templateUrl: 'app/Char/achiev.html',
     directives: [],
     providers: [ApiComp],
-    inputs: ['charData', 'achieveData'],
+    inputs: ['achieveData'],
     styleUrls: ['']
 })
 
@@ -25,6 +25,5 @@ export class AchievementsComp  {
   public timestamp: Date;
   public achiv;
   public charData;
-  public achieveData;
-   // public char = CharComp.char;
+
 }
