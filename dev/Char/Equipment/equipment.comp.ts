@@ -23,6 +23,7 @@ export class EquipmentComp {
     charEquip.push(char.items.neck);
     charEquip.push(char.items.shoulder);
     charEquip.push(char.items.back);
+    charEquip.push(char.items.chest);
     charEquip.push(char.items.tabard);
     charEquip.push(char.items.shirt);
     charEquip.push(char.items.wrist);

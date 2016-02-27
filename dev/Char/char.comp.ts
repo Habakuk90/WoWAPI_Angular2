@@ -27,6 +27,10 @@ export class CharComp {
   public char: IChar;
   public achiveData: IAchievementsData;
 
+  public showEquipment: boolean;
+  public showPvPAchievements: boolean;
+
+
   constructor(public api: ApiComp, public achiev:AchievementsComp, public equip:EquipmentComp) {
     this.getCharClassData();
     this.getRaceData();
@@ -86,16 +90,23 @@ export class CharComp {
     this.char.thumbnail = "http://eu.battle.net/static-render/eu/" + this.char.thumbnail;
     this.charPvPAchiev = this.achiev.getCharAchievements(this.char);
     this.charEquipment = this.equip.setCharEquip(this.char);
-    console.log(this.char);
+    console.log(this.charEquipment);
   }
 
   filter(e) {
-    if (e.target.style.background === 'rgb(22, 29, 117)' || !e.target.style.background) {
-      e.target.style.background = '#696FF1';
+    var id: string = e.target.id;
+    if (id === 'equip'){
+      this.showEquipment = true;
     }
-    else {
-      e.target.style.background = '#161D75';
+    else{
+      this.showEquipment = false;
     }
-  }
+    if (id === 'pvp-achiev'){
+      this.showPvPAchievements = true;
+    }
+    else{
+      this.showPvPAchievements = false;
+    }
 
+  }
 }

@@ -18,13 +18,13 @@
     <div class="search-wrapper">
       <ul class="search-for">
         <li class="col-lg-4">
-          <label (click)="filter($event)">Guild</label>
+          <label id="equip" (click)="filter($event)">Equipment</label>
         </li>
         <li class="col-lg-4">
-          <label (click)="filter($event)">PvP Achievements</label>
+          <label id="pvp-achiev" (click)="filter($event)">PvP Achievements</label>
         </li>
         <li class="col-lg-4">
-          <label (click)="filter($event)">All Achiev</label>
+          <label id="all-achiev" (click)="filter($event)">All Achiev</label>
         </li>
       </ul>
     </div>
@@ -42,8 +42,8 @@
       </div>
     </div>
     <div class="container content-achiev">
-      <achiev-data [achieveData]="charPvPAchiev"></achiev-data>
-      <equip-data [equipItems]="charEquipment"></equip-data>
+      <achiev-data *ngIf="showPvPAchievements" [achieveData]="charPvPAchiev"></achiev-data>
+      <equip-data *ngIf="showEquipment" [equipItems]="charEquipment"></equip-data>
     </div>
   </div>
 </div>
