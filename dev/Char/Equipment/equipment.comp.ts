@@ -18,7 +18,7 @@ export class EquipmentComp {
 
 
   setCharEquip(char:IChar) {
-    charEquip=[]
+    var charEquip=[]
     charEquip.push(char.items.head);
     charEquip.push(char.items.neck);
     charEquip.push(char.items.shoulder);
