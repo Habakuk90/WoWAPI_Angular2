@@ -1,37 +1,39 @@
 export interface IChar  {
   achievementPoints: number,
-  achievements: Achievements,
+  achievements: IAchievements,
   battlegroup: string,
   calcClass: string,
-  playerClass: number,
+  class: number,
   faction: number,
   gender: number,
-  guild: Guild,
-  items: Equipment,
+  guild: IGuild,
+  items: IEquipment,
   level: number,
   name: string,
-  pvp: PvpBracket,
+  pvp: IPvpBracket,
   race: number,
   realm: string,
   thumbnail: string,
-  totalHonorableKills: number
+  totalHonorableKills: number,
+  playerClass: IClassData,
+  playerRace: IRaceData
 }
 
-interface Achievements {
+interface IAchievements {
   achievementsCompleted: number [],
   achievementsCompletedTimestamp: number[]
 }
 
-interface Guild {
+interface IGuild {
   achievementPoints: number,
   battlegroup: string,
-  emblem: GuildEmblem,
+  emblem: IGuildEmblem,
   members: number,
   name: string,
   realm: string
 }
 
-interface GuildEmblem {
+interface IGuildEmblem {
   backgroundColor: string,
   border: number,
   borderColor: string,
@@ -39,56 +41,78 @@ interface GuildEmblem {
   iconColor: string
 }
 
-interface Equipment {
+export interface IEquipment {
   averageItemLevel: number,
   averageItemLevelEquipped: number,
-  back: Item,
-  chest: Item,
-  feet: Item,
-  finger1: Item,
-  finger2: Item,
-  hands: Item,
-  legs: Item,
-  mainHand: Item,
-  neck: Item,
-  shirt: Item,
-  shoulder: Item,
-  tabard: Item,
-  trinket1: Item,
-  trinket2: Item,
-  waist: Item,
-  wrist: Item,
+  head: IItem,
+  back: IItem,
+  chest: IItem,
+  feet: IItem,
+  finger1: IItem,
+  finger2: IItem,
+  hands: IItem,
+  legs: IItem,
+  mainHand: IItem,
+  neck: IItem,
+  shirt: IItem,
+  shoulder: IItem,
+  tabard: IItem,
+  trinket1: IItem,
+  trinket2: IItem,
+  waist: IItem,
+  wrist: IItem,
 }
 
 
-interface Item {
+export interface IItem {
   armor: number,
   context:string,
   icon: string,
   id: number,
   itemLevel: number,
   name: string,
-  stats: Stats
+  stats: IStats
 
 }
 
-interface Stats {
+interface IStats {
   amount: number,
   stat: number
 }
 
 
-interface PvpBracket {
-  two: BracketDetail,
-  three:BracketDetail,
-  five: BracketDetail,
-  RBG: BracketDetail
+interface IPvpBracket {
+  two: IBracketDetail,
+  three:IBracketDetail,
+  five: IBracketDetail,
+  RBG: IBracketDetail
 }
 
-interface BracketDetail {
+interface IBracketDetail {
   rating: number,
   seasonLost: number,
   seasonPLayed: number,
   seasonWon: number,
   slug: string,
+}
+
+export interface IClassesData {
+  classes: IClassData[],
+}
+interface IClassData {
+  id: number,
+  mask: number,
+  powerType: string,
+  name: string
+}
+
+export interface IRacesData {
+  races: IRaceData[],
+}
+
+interface IRaceData {
+  id: number,
+  mask: number,
+  name: string,
+  side: string
 }

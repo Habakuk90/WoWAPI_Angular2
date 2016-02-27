@@ -35,14 +35,16 @@
         <img [src]="char?.thumbnail" alt="">
       </div>
       <div class="col-lg-9">
-        <label class="" style="color:#E6E42F">{{char?.name}}</label>
+        <label class="" style="color:#E6E42F">{{char?.name}}, {{char?.playerClass?.name}}</label><br>
         <label style="color:#E6E42F">
           <{{char?.guild?.name}}>
         </label>
       </div>
     </div>
     <div class="container content-achiev">
-      <achiev-data [charData]="char?.achievements" [achieveData]="charPvPAchiev"></achiev-data>
+      <achiev-data [achieveData]="charPvPAchiev"></achiev-data>
+      <equip-data [equipItems]="charEquipment"></equip-data>
     </div>
   </div>
 </div>
+

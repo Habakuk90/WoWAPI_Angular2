@@ -1,15 +1,18 @@
 import {Component, Inject, Injectable, forwardRef} from 'angular2/core';
 import {ApiComp} from '../wowApi.service';
-import {AchievementsComp} from './achievements.comp';
-import {IChar} from './char';
+import {AchievementsComp} from './Achiev/achievements.comp';
+import {IChar, IClassesData, IRacesData} from './char';
+import {IAchievementsData} from './Achiev/achiev';
+import {EquipmentComp} from './Equipment/equipment.comp';
+
 
 @Injectable()
 
 @Component({
     selector: 'char',
-    templateUrl: 'app/Char/char.html',
-    directives: [AchievementsComp],
-    providers: [ApiComp, AchievementsComp],
+    templateUrl: 'app/Templates/Char/char.html',
+    directives: [AchievementsComp, EquipmentComp],
+    providers: [ApiComp, AchievementsComp, EquipmentComp],
 })
 
 
@@ -17,28 +20,36 @@ import {IChar} from './char';
 export class CharComp {
   public charName: string = 'Kiluk';
   public realmName: string = 'Mannoroth';
-  public classes;
+  public classesData: IClassesData;
+  public raceData: IRacesData;
   public hidden;
   public visible = true;
   public char: IChar;
-  public achiv: AchievmentsData;
+  public achiveData: IAchievementsData;
 
-  constructor(public api: ApiComp, public achiev:AchievementsComp) {
-    this.getAchievementList();
+  constructor(public api: ApiComp, public achiev:AchievementsComp, public equip:EquipmentComp) {
+    this.getCharClassData();
+    this.getRaceData();
     // this.char.thumbnail = '';
   }
-  // getCharClass() {
-  //   var char = this.char;
-  //   var classes = [];
+  getCharClassData() {
+    // var charClass = this.char.class;
+    this.api.getPlayerClassData().
+    subscribe(
+      data => this.classesData = data,
+      error => console.log(error)
+    )
+  }
 
-  //   for (var i = 0; i < 11; ++i) {
-  //   classes.push(this.classes[i]);
-  //     console.log(char)
-  //     if (classes[i].id === char.class)
-  //       this.char.className = classes[i].name;
-  //   }
+  getRaceData() {
+    this.api.getRaceData()
+    .subscribe(
+      data => this.raceData = data,
+      error => console.log(error)
+      )
+  }
 
-  // }
+
   getChar() {
     this.api.getChar(this.realmName, this.charName, 'guild')
       .subscribe(
@@ -47,112 +58,44 @@ export class CharComp {
       () => this.getCharPvPAchiev()
       )
   }
+
+
+
+  public charPvPAchiev;
+  public charEquipment;
+  getCharPvPAchiev() {
+    var classesData = this.classesData;
+    var charClass = this.char.class;
+
+
+    var charRace = this.char.race;
+    for (var i = 0; i < classesData.classes.length; ++i) {
+      if (classesData.classes[i].id === charClass) {
+        console.log(classesData.classes[i]);
+        this.char.playerClass = (classesData.classes[i])
+      }
+    }
+
+    var racesData = this.raceData;
+    for (var i = 0; i < racesData.races.length; ++i) {
+      if (racesData.races[i].id === charRace){
+        this.char.playerRace = racesData.races[i];
+      }
+    }
+
+    this.char.thumbnail = "http://eu.battle.net/static-render/eu/" + this.char.thumbnail;
+    this.charPvPAchiev = this.achiev.getCharAchievements(this.char);
+    this.charEquipment = this.equip.setCharEquip(this.char);
+    console.log(this.char);
+  }
+
   filter(e) {
     if (e.target.style.background === 'rgb(22, 29, 117)' || !e.target.style.background) {
       e.target.style.background = '#696FF1';
     }
-    else{
+    else {
       e.target.style.background = '#161D75';
     }
   }
 
-  getAchievementList() {
-      var achiveList = [];
-
-      this.api.getAchievementList().subscribe(
-      data => this.achiv = data,
-      err => console.log(err)
-      )
-  }
-
-  setTimeStamp(timestamp) {
-      var time = timestamp,
-      date = new Date(timestamp * 1000),
-      datevalues = [
-        date.getFullYear(),
-        date.getMonth() + 1,
-        date.getDate(),
-      ];
-    return datevalues;
-  }
-
-  public charPvPAchiev;
-  getCharPvPAchiev() {
-      this.charPvPAchiev = [];
-      var charAchiev = this.char.achievements.achievementsCompleted;
-      var charAchievTimestamp = this.char.achievements.achievementsCompletedTimestamp;
-      this.char.thumbnail = "http://eu.battle.net/static-render/eu/" + this.char.thumbnail;
-
-      var pvpAchievArena = this.achiv.achievements[3].categories[15].achievements;
-      var pvpAchievRBG = this.achiv.achievements[3].categories[14].achievements;
-      for (var i = 0; i < charAchiev.length; ++i) {
-        for (var j = 0; j < pvpAchievArena.length; ++j) {
-          if (charAchiev[i] === pvpAchievArena[j].id) {
-            pvpAchievArena[j].timestamp = this.setTimeStamp(charAchievTimestamp[charAchiev[i]] / 1000);
-            this.charPvPAchiev.push(pvpAchievArena[j]);
-            break;
-          }
-        }
-      }
-      for (var i = 0; i < charAchiev.length; ++i) {
-        for (var j = 0; j < pvpAchievRBG.length; ++j) {
-          if (charAchiev[i] === pvpAchievRBG[j].id) {
-            this.charPvPAchiev.push(pvpAchievRBG[j]);
-            break;
-          }
-        }
-      }
-
-      for (var i = 0; i < this.charPvPAchiev.length; ++i) {
-        this.charPvPAchiev[i].timestamp = this.setTimeStamp(charAchievTimestamp[this.charPvPAchiev[i].id] / 1000);
-      }
-  }
-
-  getAchiev() {
-
-      //mit achievement id array
-      var completed_achievement;
-      var len = this.achiv.achievements.length;
-      var len2 = this.achiv.achievements[0].achievements.length;
-      for (var i = 0; i < len; i++) {
-        for (var j = 0; j < len2; ++j) {
-          if (this.achiv.achievements[i].achievements[j].id && this.achiv.achievements[i].achievements[j].id === 9)
-            break;
-        }
-      }
-  }
-
-  // getItem(item) {
-  //   var charItems = this.char.items;
-  //   console.log(this.char);
-  //   this.api.getItem(charItems.item.id).subscribe(
-  //       data=> console.log(data)
-  //   )
-
-  // }
-  // getCharGuild() {
-  //   this.api.
-  // }
-
-  // http:// eu.battle.net/static-render/nefarian/ + <the string you got from API as thumbnail>
-}
-
-interface Char {
-  achievements: CharAchievements,
-  thumbnail: string,
-
-}
-
-interface CharAchievements {
-  achievementsCompleted: number[],
-  achievementsCompletedTimestamp: number[],
-
-}
-
-interface AchievmentsData {
-  achievements: achievments[],
-
-}
-interface achievments {
-  achievements: number[]
 }

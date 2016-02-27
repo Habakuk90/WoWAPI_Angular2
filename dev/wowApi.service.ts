@@ -50,17 +50,22 @@ export class ApiComp {
   public spellApi: string = 'spell/:spellid?';
 
   public dataResource: string = 'data/';
-  public dataResourceFields = [
-    'battlegroups/',
-    'character/races',
-    'character/classes',
-    'character/achievements',
-    'item/classes',
-    'talents',
-  ]
+  public dataResourceFields = {
+    battlegroup: 'battlegroups/',
+    charRaces: 'character/races',
+    charClasses: 'character/classes',
+    charAchieve: 'character/achievements',
+    itemClasses: 'item/classes',
+    talents: 'talents',
+  }
 
 
   public fullLink: string = '';
+
+  generateDataResourceLink(val) {
+    return this.link + this.dataResource + val + '?' + this.local + this.apiKey;
+  }
+
   generateProfileLink(char: string, fields: string) {
     return this.link + this.charProfile.value + char + this.fields + 'pvp+guild+achievements+items' +this.local + this.apiKey;
   }
@@ -70,11 +75,11 @@ export class ApiComp {
   }
 
   generateAchievementLink() {
-    return this.fullLink = this.link + this.dataResource + this.dataResourceFields[3] + '?' + this.local + this.apiKey;
+    return this.link + this.dataResource + this.dataResourceFields.charAchieve + '?' + this.local + this.apiKey;
   }
 
   generateItemLink(id:number) {
-    return this.fullLink = this.link + this.itemApi + id + '?' + this.local + this.apiKey;
+    return this.link + this.itemApi + id + '?' + this.local + this.apiKey;
   }
 
   generateLeaderboardLink(val) {
@@ -89,8 +94,20 @@ export class ApiComp {
     this.fullLink = this.link + this.spellApi + this.local + this.apiKey;
   }
 
-  generateDataResourceLink(val) {
-    this.fullLink = this.link + this.dataResource + val + '?' + this.local + this.apiKey;
+  generateClassDataLink() {
+    return this.generateDataResourceLink(this.dataResourceFields.charClasses);
+  }
+
+  generateRaceDataLink() {
+    return this.generateDataResourceLink(this.dataResourceFields.charRaces);
+  }
+
+  getRaceData() {
+    return this._http.get(this.generateRaceDataLink()).map(res  => res.json());
+  }
+
+  getPlayerClassData() {
+    return this._http.get(this.generateClassDataLink()).map(res => res.json());
   }
 
   getAchievementList() {
@@ -103,5 +120,4 @@ export class ApiComp {
   getItem(id:number) {
     return this._http.get(this.generateItemLink(id)).map(res=> res.json());
   }
-
 }
