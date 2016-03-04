@@ -123,10 +123,22 @@ nav {
     position: relative;
     border: solid white 1px;
     border-radius: 20px;
-    overflow: scroll;
+    overflow: auto;
     -webkit-box-shadow: inset 12px 14px 19px -9px rgba(0, 0, 0, 1);
     -moz-box-shadow: inset 12px 14px 19px -9px rgba(0, 0, 0, 1);
     box-shadow: inset 12px 14px 19px -9px rgba(0, 0, 0, 1);
+  }
+  .content-achiev::-webkit-scrollbar {
+    height: 80%;
+    width: 2px;
+  }
+  .content-achiev::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+  .content-achiev::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -143,6 +155,6 @@ nav {
     padding: 0;
     border-radius: 20px;
     overflow: hidden;
-    img { }
+    img {}
   }
 }
