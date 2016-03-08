@@ -1,5 +1,6 @@
-import {Component, Input, Injectable, Inject, forwardRef} from 'angular2/core';
-import {IChar} from '../char';
+import {Component, Input, Injectable, Inject, forwardRef, ElementRef} from 'angular2/core';
+import {IChar, IEquipment, IItem} from '../char';
+
 
 @Injectable()
 
@@ -16,9 +17,8 @@ import {IChar} from '../char';
 
 export class EquipmentComp {
 
-
   setCharEquip(char:IChar) {
-    var charEquip=[]
+    var charEquip = [];
     charEquip.push(char.items.head);
     charEquip.push(char.items.neck);
     charEquip.push(char.items.shoulder);
@@ -36,6 +36,20 @@ export class EquipmentComp {
     charEquip.push(char.items.trinket1);
     charEquip.push(char.items.trinket2);
     charEquip.push(char.items.mainHand);
+    charEquip.push(char.items.offHand);
+    console.log(charEquip);
+
+
+    for (var i = 0; i < charEquip.length; ++i) {
+      if (charEquip[i]) {
+        charEquip[i].icon = "http://media.blizzard.com/wow/icons/56/" + charEquip[i].icon + ".jpg";
+        charEquip[i].slot = i;
+      }
+    }
+
     return charEquip;
+  }
+
+  setSlots(item) {
   }
 }

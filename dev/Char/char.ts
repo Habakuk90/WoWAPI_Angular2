@@ -53,6 +53,7 @@ export interface IEquipment {
   hands: IItem,
   legs: IItem,
   mainHand: IItem,
+  offHand: IItem,
   neck: IItem,
   shirt: IItem,
   shoulder: IItem,
@@ -71,7 +72,8 @@ export interface IItem {
   id: number,
   itemLevel: number,
   name: string,
-  stats: IStats
+  stats: IStats,
+  slot: number;
 
 }
 

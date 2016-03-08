@@ -1,10 +1,9 @@
 import {Component, Inject, Injectable, forwardRef} from 'angular2/core';
 import {ApiComp} from '../wowApi.service';
 import {AchievementsComp} from './Achiev/achievements.comp';
-import {IChar, IClassesData, IRacesData} from './char';
+import {IChar, IClassesData, IRacesData, IEquipment, IItem} from './char';
 import {IAchievementsData} from './Achiev/achiev';
 import {EquipmentComp} from './Equipment/equipment.comp';
-
 
 @Injectable()
 
@@ -59,15 +58,15 @@ export class CharComp {
       .subscribe(
       data => this.char = data,
       error => console.log(error),
-      () => this.getCharPvPAchiev()
+      () => this.setCharData()
       )
   }
 
 
 
   public charPvPAchiev;
-  public charEquipment;
-  getCharPvPAchiev() {
+  public charEquipment: IItem[];
+  setCharData() {
     var classesData = this.classesData;
     var charClass = this.char.class;
 
@@ -90,7 +89,8 @@ export class CharComp {
     this.char.thumbnail = "http://eu.battle.net/static-render/eu/" + this.char.thumbnail;
     this.charPvPAchiev = this.achiev.getCharAchievements(this.char);
     this.charEquipment = this.equip.setCharEquip(this.char);
-    console.log(this.charEquipment);
+
+    console.log(this.charEquipment[0].icon);
   }
 
   filter(e) {

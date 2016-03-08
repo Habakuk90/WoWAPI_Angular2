@@ -2,4 +2,16 @@
 <div *ngFor="#charEquip of equipItems" style="color:white" class="achiev-wrapper">
 {{charEquip?.name}}<br>
 {{charEquip?.itemLevel}}
+<img [attr.id]="'slot-' + charEquip?.slot" [src]="charEquip?.icon" />
 </div>
+
+
+<style>
+  div:nth-child(n+9) {
+    float:right;
+  }
+  div {
+    width:200px;
+    position: relative;
+  }
+</style>
